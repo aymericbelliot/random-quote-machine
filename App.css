@@ -1,0 +1,30 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #CCC;
+  transition-duration: 1s;
+}
+
+#quote-box {
+  max-width: 600px;
+  padding: 50px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+#text {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: white;
+}
+
+#author {
+  font-size: 1em;
+  font-weight: 500;
+  color: black;
+}
