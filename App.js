@@ -21,9 +21,6 @@ const quoteList = [
   { quote: "Je ne cherche pas à connaître les réponses, je cherche à comprendre les questions.", author: "Confusius" }
 ];
 
-const domElement = document.querySelector("#root");
-const e = React.createElement;
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +31,6 @@ class App extends React.Component {
       quote: '',
       author: ''
     }
-    this.handleClick = this.handleClick.bind(this);
   }
 
   loadQuote() {
@@ -60,40 +56,48 @@ class App extends React.Component {
     this.loadQuote();
   }
 
-  // load new quote on click event
-  handleClick() {
-    this.loadQuote();
-  }
-
   render() {
     return (
       <div className="App" style={this.state.bgColor}>
-        <div id="quote-box" className="container-fluid">
-          <div id="text" className="d-flex" style={this.state.color}>
-            <i className="fas fa-quote-left mr-3"></i>
-            <blockquote className="text-left">{this.state.quote}</blockquote>
-          </div>
-          <p id="author" className="text-right" style={this.state.color}>- {this.state.author}</p>
-          <div className="row">
-            <div className="col-md-2">
-              <a id="tweet-quote" className="btn btn-block btn-primary border-0" href="https://twitter.com/intent/tweet" target="_blank" style={this.state.bgColor}>
-                <i className="fab fa-twitter"></i>
-              </a>
-            </div>
-            <div className="col-md-2">
-              <a className="btn btn-block btn-primary border-0" href="https://tmbler.com" target="_blank" style={this.state.bgColor}>
-                <i className="fab fa-tumblr"></i>
-              </a>
-            </div>
-            <div className="col-md-4"></div>
-            <div className="col-md-4">
-              <button id="new-quote" className="App-newQuote btn btn-block btn-primary border-0" onClick={this.handleClick} style={this.state.bgColor}>New quote</button>
-            </div>
-          </div>
-        </div>
+        <DisplayQuote load={this.loadQuote.bind(this)} color={this.state.color} bgColor={this.state.bgColor} quote={this.state.quote} author={this.state.author} />
       </div>
     );
   }
 }
 
-ReactDOM.render(<App />, domElement);
+class DisplayQuote extends React.Component {
+  handleClick() {
+    this.props.load();
+  }
+
+  render() {
+    return (
+      <div id="quote-box" className="container-fluid">
+        <div id="text" className="d-flex" style={this.props.color}>
+          <i className="fas fa-quote-left mr-3"></i>
+          <blockquote className="text-left">{this.props.quote}</blockquote>
+        </div>
+        <p id="author" className="text-right" style={this.props.color}>- {this.props.author}</p>
+        <div className="row">
+          <div className="col-md-2">
+            <a id="tweet-quote" className="btn btn-block btn-primary border-0" href="https://twitter.com/intent/tweet" target="_blank" style={this.props.bgColor}>
+              <i className="fab fa-twitter"></i>
+            </a>
+          </div>
+          <div className="col-md-2">
+            <a className="btn btn-block btn-primary border-0" href="https://tmbler.com" target="_blank" style={this.props.bgColor}>
+              <i className="fab fa-tumblr"></i>
+            </a>
+          </div>
+          <div className="col-md-4"></div>
+          <div className="col-md-4">
+            <button id="new-quote" className="btn btn-block btn-primary border-0" onClick={this.handleClick.bind(this)} style={this.props.bgColor}>New quote</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+// Render Application in html page
+ReactDOM.render(<App />, document.querySelector("#root"));
